@@ -1,8 +1,6 @@
 package kafka
 
-import (
-	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
-)
+import ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 
 type KafkaProducer struct {
 	Producer *ckafka.Producer
@@ -21,7 +19,7 @@ func (k *KafkaProducer) SetupProducer(bootstrapServer string) {
 
 func (k *KafkaProducer) Publish(msg string, topic string) error {
 	message := &ckafka.Message{
-		TopicPartition: ckafka.TopicPartition{Topic: &topic},
+		TopicPartition: ckafka.TopicPartition{Topic: &topic, Partition: 0},
 		Value:          []byte(msg),
 	}
 	err := k.Producer.Produce(message, nil)
